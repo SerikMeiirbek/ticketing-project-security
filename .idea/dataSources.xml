@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/ticketing-app</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Amazon ticketingdb" uuid="6f92f405-0c17-495a-a5a3-02dc7952dd05">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ticketingdb.cmpiijiz7qq4.us-east-2.rds.amazonaws.com:5432/ticketingdb</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
