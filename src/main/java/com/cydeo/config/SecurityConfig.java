@@ -12,9 +12,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final SecutiryService secutiryService;
+    private final AuthSuccessHandler authSuccessHandler;
 
-    public SecurityConfig(SecutiryService secutiryService) {
+    public SecurityConfig(SecutiryService secutiryService, AuthSuccessHandler authSuccessHandler) {
         this.secutiryService = secutiryService;
+        this.authSuccessHandler = authSuccessHandler;
     }
 
     //    @Bean
@@ -34,9 +36,9 @@ public class SecurityConfig {
                 .authorizeRequests()
 //                .antMatchers("/user/**").hasRole("Admin")
                 .antMatchers("/user/**").hasAnyAuthority("Admin")
-                .antMatchers("/project/**").hasAnyAuthority("Manager")
-                .antMatchers("/task/employee/**").hasRole("Employee")
-                .antMatchers("/task/**").hasRole("Manager")
+                .antMatchers("/project/**").hasAuthority("Manager")
+                .antMatchers("/task/employee/**").hasAuthority("Employee")
+                .antMatchers("/task/**").hasAuthority("Manager")
 //                .antMatchers("/task/**").hasAnyRole("EMPLOYEE","ADMIN")
 //                .antMatchers("task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
@@ -51,7 +53,8 @@ public class SecurityConfig {
 //                .httpBasic()
                 .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/welcome")
+//                    .defaultSuccessUrl("/welcome")
+                    .successHandler(authSuccessHandler)
                     .failureUrl("/login?error=true")
                     .permitAll()
                 .and()

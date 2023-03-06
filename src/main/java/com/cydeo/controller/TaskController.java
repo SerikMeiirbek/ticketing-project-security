@@ -5,6 +5,7 @@ import com.cydeo.enums.Status;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,9 +30,11 @@ public class TaskController {
     @GetMapping("/create")
     public String createTask(Model model) {
 
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
         model.addAttribute("task", new TaskDTO());
         model.addAttribute("projects", projectService.listAllProjects());
-        model.addAttribute("employees", userService.listAllByRole("employee"));
+        model.addAttribute("employees", userService.listAllByRole(username));
         model.addAttribute("tasks", taskService.listAllTasks());
 
         return "task/create";
